@@ -18,7 +18,7 @@ describe('join team', function() {
 
         setTimeout(function() {
             console.log(teamio.data.teams['xyz'].members);
-            expect(teamio.data.teams['xyz'].members['1']).to.not.equal(null);
+            expect(teamio.data.teams['xyz'].members['1'].memberId).to.equal('1');
         }, 100);
 
         setTimeout(done, 200);
