@@ -10,7 +10,6 @@ describe('create team', function() {
         var teamio = require('../lib/index')(server);
         server.listen(3000);
         teamio.createTeam({teamId: 'xyz'});
-        console.log(teamio.data.teams);
         expect(teamio.data.teams['xyz']).to.not.equal(null);
         setTimeout(done, 100);
     })
