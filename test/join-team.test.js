@@ -3,24 +3,27 @@
  */
 var chai = require('chai');
 var expect = chai.expect;
+var server = require('http').createServer();
+var teamio = require('../lib/index')(server);
 
 describe('join team', function() {
-    it('should join the team', function(done) {
-        var server = require('http').createServer();
-        var teamio = require('../lib/index')(server);
-        server.listen(3000);
+
+    var client;
+
+    before(function(done) {
+        server.listen(3001, function() {
+            client = require('socket.io-client')('http://localhost:3001');
+            done();
+        });
+    });
+
+    it('should have a team member of 1', function(done) {
         teamio.createTeam({teamId: 'xyz'});
-
-        var client = require('socket.io-client');
-        var socket = client('http://localhost:3000');
-
-        socket.emit('joinTeam', {teamId: 'xyz', memberId: '1'});
-
+        client.emit('joinTeam', {teamId: 'xyz', memberId: '1'});
         setTimeout(function() {
-            console.log(teamio.data.teams['xyz'].members);
             expect(teamio.data.teams['xyz'].members['1'].memberId).to.equal('1');
+            done();
         }, 100);
-
-        setTimeout(done, 200);
+        setTimeout(done, 1500);
     })
 });

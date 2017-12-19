@@ -4,19 +4,26 @@
 
 var chai = require('chai');
 var expect = chai.expect;
+var server = require('http').createServer();
+var teamio = require('../lib/index')(server);
 
 describe('simple connection', function() {
-    it('should connect to the socketio server', function(done) {
-        var server = require('http').createServer();
-        var teamio = require('../lib/index')(server);
-        teamio.socketio.emit('hi', {});
-        server.listen(3000);
-        var client = require('socket.io-client');
-        var socket = client('http://localhost:3000');
-        socket.on('hi', function(data) {
-            console.log(data);
-            expect(data.message).to.equal('hi');
+
+    var client;
+
+    before(function(done) {
+        server.listen(3001, function() {
+            client = require('socket.io-client')('http://localhost:3001');
+            done();
         });
-        setTimeout(done, 100);
+    });
+
+    it('should connect to the socketio server', function(done) {
+        client.on('hi', function(data) {
+            expect(data.message).to.equal('hi');
+            done();
+        });
+        setTimeout(done, 1500);
     })
 });
+
