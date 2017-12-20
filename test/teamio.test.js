@@ -25,8 +25,8 @@ describe('teamio', function() {
   it('should create a team', function(done) {
     teamio.createTeam({id: 'abc'});
     teamio.createTeam({id: 'xyz'});
-    expect(teamio.data.teams['abc']).to.be.an('object');
-    expect(teamio.data.teams['xyz']).to.be.an('object');
+    expect(teamio.team('abc')).to.be.an('object');
+    expect(teamio.team('xyz')).to.be.an('object');
     done();
   });
 
@@ -36,10 +36,10 @@ describe('teamio', function() {
   it('should delete a team', function(done) {
     teamio.createTeam({id: 'abc'});
     teamio.createTeam({id: 'xyz'});
-    expect(teamio.data.teams['abc']).to.be.an('object');
-    expect(teamio.data.teams['xyz']).to.be.an('object');
+    expect(teamio.team('abc')).to.be.an('object');
+    expect(teamio.team('xyz')).to.be.an('object');
     teamio.deleteTeam({id: 'abc'});
-    expect(teamio.data.teams['abc']).to.be.a('undefined');
+    expect(teamio.team('abc')).to.be.a('undefined');
     done();
   });
 
@@ -51,7 +51,7 @@ describe('teamio', function() {
     var client = ioClient(url);
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
     setTimeout(function() {
-      var member = teamio.data.teams['abc'].members['m1'];
+      var member = teamio.team('abc').members['m1'];
       expect(member).to.be.an('object');
       expect(member.memberId).to.equal('m1');
       done();
@@ -82,6 +82,17 @@ describe('teamio', function() {
    * team notification
    */
   it('should receive team notification', function(done) {
-    done();
+    teamio.createTeam({id: 'abc'});
+    var client = ioClient(url);
+    client.on('teamNotification', function(data) {
+
+    });
+    client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
+
+    setTimeout(function() {
+      // send team notification
+      // teamio.data.teams['abc'].notify('', {})
+      done();
+    }, 100);
   });
 });
