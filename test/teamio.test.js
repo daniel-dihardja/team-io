@@ -51,7 +51,7 @@ describe('teamio', function() {
     var client = ioClient(url);
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
     setTimeout(function() {
-      var member = teamio.team('abc').members['m1'];
+      var member = teamio.team('abc').member('m1');
       expect(member).to.be.an('object');
       expect(member.memberId).to.equal('m1');
       done();
