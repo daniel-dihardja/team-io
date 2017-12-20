@@ -44,20 +44,6 @@ describe('teamio', function() {
   });
 
   /**
-   * delete all teams
-   */
-  it('delete all teams', function(done) {
-    teamio.createTeam({id: 'abc'});
-    teamio.createTeam({id: 'xyz'});
-    expect(teamio.data.teams['abc']).to.be.an('object');
-    expect(teamio.data.teams['xyz']).to.be.an('object');
-    teamio.deleteTeam();
-    expect(teamio.data.teams['abc']).to.be.a('undefined');
-    expect(teamio.data.teams['xyz']).to.be.a('undefined');
-    done();
-  });
-
-  /**
    * join a team
    */
   it('should join a team', function(done) {
