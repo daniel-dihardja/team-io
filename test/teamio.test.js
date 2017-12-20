@@ -50,7 +50,7 @@ describe('teamio', function() {
   it('should join a team', function(done) {
     teamio.createTeam({id: 'abc'});
     var client = ioClient(url);
-    client.emit('joinTeam', {teamId: 'abc', clientId: 'm1'});
+    client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
     setTimeout(function() {
       var member = teamio.team('abc').client('m1');
       expect(member).to.be.an('object');
@@ -85,11 +85,14 @@ describe('teamio', function() {
   it('should receive team notification', function(done) {
     teamio.createTeam({id: 'abc'});
     var client = ioClient(url);
+
     client.on('teamNotification', function(data) {
       expect(data.time).to.equal('14:30');
       done();
     });
+
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
+
     setTimeout(function() {
       // emit team notification
       teamio.team('abc').emit('teamNotification', {time: '14:30'});
