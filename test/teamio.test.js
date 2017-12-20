@@ -15,6 +15,10 @@ describe('teamio', function() {
     server.listen(3001, done);
   });
 
+  afterEach(function() {
+    teamio.reset();
+  });
+
   /**
    * create a team
    */
@@ -61,10 +65,37 @@ describe('teamio', function() {
     var client = ioClient(url);
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
     setTimeout(function() {
-      var member1 = teamio.data.teams['abc'].members['m1'];
-      expect(member1).to.be.an('object');
-      expect(member1.memberId).to.equal('m1');
+      var member = teamio.data.teams['abc'].members['m1'];
+      expect(member).to.be.an('object');
+      expect(member.memberId).to.equal('m1');
       done();
     }, 100);
+  });
+
+  /**
+   * reset
+   */
+  it('should reset clients & teams', function(done) {
+    teamio.data = {
+      clients: {
+        '192.168.33.57': {},
+        '192.168.38.58': {}
+      },
+      teams:  {
+        't1': {},
+        't2': {}
+      }
+    };
+    teamio.reset();
+    expect(Object.keys(teamio.data.clients).length).to.equal(0);
+    expect(Object.keys(teamio.data.teams).length).to.equal(0);
+    done();
+  });
+
+  /**
+   * team notification
+   */
+  it('should receive team notification', function(done) {
+    done();
   });
 });
