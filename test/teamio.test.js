@@ -53,7 +53,7 @@ describe('teamio', function() {
     setTimeout(function() {
       var member = teamio.team('abc').member('m1');
       expect(member).to.be.an('object');
-      expect(member.memberId).to.equal('m1');
+      expect(member.id).to.equal('m1');
       done();
     }, 100);
   });
