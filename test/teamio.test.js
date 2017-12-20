@@ -12,6 +12,7 @@ describe('teamio', function() {
   var url = 'http://localhost:3001';
 
   before(function(done) {
+    teamio.reset();
     server.listen(3001, done);
   });
 
@@ -52,9 +53,9 @@ describe('teamio', function() {
     var client = ioClient(url);
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
     setTimeout(function() {
-      var member = teamio.team('abc').client('m1');
-      expect(member).to.be.an('object');
-      expect(member.id).to.equal('m1');
+      var client = teamio.team('abc').client('m1');
+      expect(client).to.be.an('object');
+      expect(client.memberId).to.equal('m1');
       done();
     }, 100);
   });
@@ -73,9 +74,11 @@ describe('teamio', function() {
         't2': {}
       }
     };
+
     teamio.reset();
     expect(Object.keys(teamio.data.clients).length).to.equal(0);
     expect(Object.keys(teamio.data.teams).length).to.equal(0);
+
     done();
   });
 
