@@ -86,14 +86,13 @@ describe('teamio', function() {
     teamio.createTeam({id: 'abc'});
     var client = ioClient(url);
     client.on('teamNotification', function(data) {
-
+      expect(data.time).to.equal('14:30');
+      done();
     });
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
     setTimeout(function() {
-      // send team notification
-      // teamio.data.teams['abc'].notify('', {})
+      // emit team notification
       teamio.team('abc').emit('teamNotification', {time: '14:30'});
-      done();
     }, 100);
   });
 });
