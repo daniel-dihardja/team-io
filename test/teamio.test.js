@@ -40,6 +40,7 @@ describe('teamio', function() {
     expect(teamio.team('xyz')).to.be.an('object');
     teamio.deleteTeam({id: 'abc'});
     expect(teamio.team('abc')).to.be.a('undefined');
+    expect(teamio.team('xyz')).to.be.an('object');
     done();
   });
 
@@ -49,9 +50,9 @@ describe('teamio', function() {
   it('should join a team', function(done) {
     teamio.createTeam({id: 'abc'});
     var client = ioClient(url);
-    client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
+    client.emit('joinTeam', {teamId: 'abc', clientId: 'm1'});
     setTimeout(function() {
-      var member = teamio.team('abc').member('m1');
+      var member = teamio.team('abc').client('m1');
       expect(member).to.be.an('object');
       expect(member.id).to.equal('m1');
       done();
