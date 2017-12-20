@@ -88,10 +88,10 @@ describe('teamio', function() {
 
     });
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
-
     setTimeout(function() {
       // send team notification
       // teamio.data.teams['abc'].notify('', {})
+      teamio.team('abc').emit('teamNotification', {time: '14:30'});
       done();
     }, 100);
   });
