@@ -107,6 +107,8 @@ describe('teamio', function() {
    */
   it('should receive missed message', function(done) {
     teamio.createTeam({id: 'abc'});
+
+    // client is connecting
     var client = ioClient(url);
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
 
@@ -121,7 +123,7 @@ describe('teamio', function() {
       client.close();
     }, 100);
 
-    // emit team notification
+    // server is emiting a team notification
     setTimeout(function() {
       teamio.team('abc').emit('teamNotification', {time: '14:37'});
     }, 200);
