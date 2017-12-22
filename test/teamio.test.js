@@ -101,4 +101,34 @@ describe('teamio', function() {
       teamio.team('abc').emit('teamNotification', {time: '14:30'});
     }, 100);
   });
+
+  /**
+   * receive missed message
+   */
+  it('should receive missed message', function(done) {
+    teamio.createTeam({id: 'abc'});
+    var client = ioClient(url);
+    client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
+
+    // handle notification after reconnect
+    client.on('teamNotification', function(data) {
+      expect(data.time).to.equal('14:37');
+      done();
+    });
+
+    // client loose connection here
+    setTimeout(function() {
+      client.close();
+    }, 100);
+
+    // emit team notification
+    setTimeout(function() {
+      teamio.team('abc').emit('teamNotification', {time: '14:37'});
+    }, 200);
+
+    // client reopen connection
+    setTimeout(function() {
+      client.open();
+    }, 300);
+  });
 });
