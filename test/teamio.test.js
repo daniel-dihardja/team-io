@@ -105,7 +105,7 @@ describe('teamio', function() {
   /**
    * receive missed message
    */
-  it('should receive missed message', function(done) {
+  it('should receive missed notification', function(done) {
     teamio.createTeam({id: 'abc'});
 
     // client is connecting
