@@ -9,11 +9,12 @@ var ioClient = require('socket.io-client');
 
 describe('teamio', function() {
 
-  var url = 'http://localhost:3001';
+  var port = "3002";
+  var url = 'http://localhost:' + port;
 
   before(function(done) {
     teamio.reset();
-    server.listen(3001, done);
+    server.listen(port, done);
   });
 
   afterEach(function() {
