@@ -33,6 +33,6 @@ var client = ioClient('http://localhost:3000');
 // client joins a team
 client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
 
-// from now on, missed notification while a client is disconnected, will be resended after reconnection
+// from now on, the last missed notification while a client is disconnected, will be resended after reconnection
 
 ```
