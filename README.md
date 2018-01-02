@@ -18,7 +18,7 @@ server.listen('3000', function() {
 
 ```
 
-##### Client (js):
+##### Client (node.js): 
 ```javascript
 
 var ioClient = require('socket.io-client');
