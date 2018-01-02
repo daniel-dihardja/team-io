@@ -1,8 +1,8 @@
 # Team-IO
 
 Team-io is a layer on top of socket.io that manage notifications within a team. If a client gets disconnected and missed a notification, Team-IO will resend the missed notification right after the client gets reconnected.
-###Example
-#####Server:
+### Example
+##### Server:
 ```javascript
 
 var server = require('http').createServer();
@@ -18,7 +18,7 @@ server.listen('3000', function() {
 
 ```
 
-#####Client (js):
+##### Client (js):
 ```javascript
 
 var ioClient = require('socket.io-client');
