@@ -111,9 +111,12 @@ describe('teamio', function() {
 
     // client is connecting
     var client = ioClient(url);
+
+    // client joins a team
     client.emit('joinTeam', {teamId: 'abc', memberId: 'm1'});
 
     // handle notification after reconnect
+
     client.on('teamNotification', function(data) {
       expect(data.time).to.equal('14:37');
       done();
