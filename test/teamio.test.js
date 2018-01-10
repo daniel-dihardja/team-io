@@ -33,6 +33,17 @@ describe('teamio', function() {
   });
 
   /**
+   * create a team with the expectedMembers options
+   *
+   */
+  it('should create a team with the optional params expectedMembers', function(done) {
+    teamio.createTeam({id: 'abc', expectedMembers: 12});
+    var team = teamio.team('abc');
+    expect(teamio.team('abc').opts.expectedMembers).to.equal(12);
+    done();
+  });
+
+  /**
    * delete a team
    */
   it('should delete a team', function(done) {
@@ -60,6 +71,22 @@ describe('teamio', function() {
       done();
     }, 100);
   });
+
+  /**
+   *
+   */
+  it('should join a team as a subscriber', function(done) {
+    teamio.createTeam({id: 'abc'});
+    var client = ioClient(url);
+    client.emit('joinTeam', {teamId: 'abc', memberId: 'm1', subscriber: true});
+    setTimeout(function() {
+      expect(teamio.team('abc').subscribers.length).to.equal(1);
+      expect(teamio.team('abc').subscribers[0].memberId).to.equal('m1');
+      done();
+    }, 100);
+  });
+
+
 
   /**
    * reset
