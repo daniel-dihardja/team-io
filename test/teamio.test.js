@@ -86,8 +86,6 @@ describe('teamio', function() {
     }, 100);
   });
 
-
-
   /**
    * reset
    */
